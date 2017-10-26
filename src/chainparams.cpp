@@ -261,14 +261,14 @@ public:
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x00");
 
-        pchMessageStart[0] = 0xfa;
-        pchMessageStart[1] = 0xbf;
-        pchMessageStart[2] = 0xb5;
-        pchMessageStart[3] = 0xda;
+        pchMessageStart[0] = 0x6B;
+        pchMessageStart[1] = 0x69;
+        pchMessageStart[2] = 0x67;
+        pchMessageStart[3] = 0x65;
         nDefaultPort = 19444;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1296688602, 0, 0x207fffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1507616851, 0, 0x207fffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x001"));
         assert(genesis.hashMerkleRoot == uint256S("0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9"));
@@ -285,14 +285,14 @@ public:
 	checkpointData = (CCheckpointData){
 		boost::assign::map_list_of
 			( 0, uint256S("0x001")),
-			0,
+			1507616851,
 			0,
 			0
 	};
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,101);
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,166);
-        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,155);
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,13);
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,156);
+        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,231);
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
     }
