@@ -1,0 +1,6 @@
+usr/local/bin/materia-qt usr/bin
+share/pixmaps/materia32.xpm usr/share/pixmaps
+share/pixmaps/materia16.xpm usr/share/pixmaps
+share/pixmaps/materia128.png usr/share/pixmaps
+debian/materia-qt.desktop usr/share/applications
+debian/materia-qt.protocol usr/share/kde4/services/

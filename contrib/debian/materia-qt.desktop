@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Materia Core
+Comment=Connect to the Materia P2P Network
+Comment[de]=Verbinde mit dem Materia peer-to-peer Netzwerk
+Comment[fr]=Materia, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Materia, eşten eşe kriptografik sanal para birimi
+Exec=materia-qt %u
+Terminal=false
+Type=Application
+Icon=materia128
+MimeType=x-scheme-handler/materia;
+Categories=Office;Finance;

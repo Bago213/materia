@@ -1,0 +1,92 @@
+#!/sbin/runscript
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/materia/.materia" ]; then
+	MATERIAD_DEFAULT_DATADIR="/var/lib/materia/.materia"
+else
+	MATERIAD_DEFAULT_DATADIR="/var/lib/materiad"
+fi
+
+MATERIAD_CONFIGFILE=${MATERIAD_CONFIGFILE:-/etc/materia/materia.conf}
+MATERIAD_PIDDIR=${MATERIAD_PIDDIR:-/var/run/materiad}
+MATERIAD_PIDFILE=${MATERIAD_PIDFILE:-${MATERIAD_PIDDIR}/materiad.pid}
+MATERIAD_DATADIR=${MATERIAD_DATADIR:-${MATERIAD_DEFAULT_DATADIR}}
+MATERIAD_USER=${MATERIAD_USER:-${MATERIA_USER:-materia}}
+MATERIAD_GROUP=${MATERIAD_GROUP:-materia}
+MATERIAD_BIN=${MATERIAD_BIN:-/usr/bin/materiad}
+MATERIAD_NICE=${MATERIAD_NICE:-${NICELEVEL:-0}}
+MATERIAD_OPTS="${MATERIAD_OPTS:-${MATERIA_OPTS}}"
+
+name="Materia Core Daemon"
+description="Materia cryptocurrency P2P network daemon"
+
+command="/usr/bin/materiad"
+command_args="-pid=\"${MATERIAD_PIDFILE}\" \
+		-conf=\"${MATERIAD_CONFIGFILE}\" \
+		-datadir=\"${MATERIAD_DATADIR}\" \
+		-daemon \
+		${MATERIAD_OPTS}"
+
+required_files="${MATERIAD_CONFIGFILE}"
+start_stop_daemon_args="-u ${MATERIAD_USER} \
+			-N ${MATERIAD_NICE} -w 2000"
+pidfile="${MATERIAD_PIDFILE}"
+
+# The retry schedule to use when stopping the daemon. Could be either
+# a timeout in seconds or multiple signal/timeout pairs (like
+# "SIGKILL/180 SIGTERM/300")
+retry="${MATERIAD_SIGTERM_TIMEOUT}"
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${MATERIAD_USER}:${MATERIAD_GROUP}" \
+	"${MATERIAD_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${MATERIAD_USER}:${MATERIAD_GROUP}" \
+	"${MATERIAD_PIDDIR}"
+
+	checkpath -f \
+	-o ${MATERIAD_USER}:${MATERIAD_GROUP} \
+	-m 0660 \
+	${MATERIAD_CONFIGFILE}
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if ! grep -qs '^rpcpassword=' "${MATERIAD_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run materiad."
+		eerror "The setting must appear in ${MATERIAD_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following"
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is also recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"Materia Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}

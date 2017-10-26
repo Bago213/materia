@@ -1,0 +1,33 @@
+# /etc/conf.d/materiad: config file for /etc/init.d/materiad
+
+# Config file location
+#MATERIAD_CONFIGFILE="/etc/materia/materia.conf"
+
+# What directory to write pidfile to?  (created and owned by $MATERIAD_USER)
+#MATERIAD_PIDDIR="/var/run/materiad"
+
+# What filename to give the pidfile
+#MATERIAD_PIDFILE="${MATERIAD_PIDDIR}/materiad.pid"
+
+# Where to write materiad data (be mindful that the blockchain is large)
+#MATERIAD_DATADIR="/var/lib/materiad"
+
+# User and group to own materiad process
+#MATERIAD_USER="materia"
+#MATERIAD_GROUP="materia"
+
+# Path to materiad executable
+#MATERIAD_BIN="/usr/bin/materiad"
+
+# Nice value to run materiad under
+#MATERIAD_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+MATERIAD_OPTS="-disablewallet"
+
+# The timeout in seconds OpenRC will wait for materiad to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+MATERIAD_SIGTERM_TIMEOUT=60

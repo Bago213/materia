@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+#  materiad The materia core server.
+#
+#
+# chkconfig: 345 80 20
+# description: materiad
+# processname: materiad
+#
+
+# Source function library.
+. /etc/init.d/functions
+
+# you can override defaults in /etc/sysconfig/materiad, see below
+if [ -f /etc/sysconfig/materiad ]; then
+        . /etc/sysconfig/materiad
+fi
+
+RETVAL=0
+
+prog=materiad
+# you can override the lockfile via MATERIAD_LOCKFILE in /etc/sysconfig/materiad
+lockfile=${MATERIAD_LOCKFILE-/var/lock/subsys/materiad}
+
+# materiad defaults to /usr/bin/materiad, override with MATERIAD_BIN
+materiad=${MATERIAD_BIN-/usr/bin/materiad}
+
+# materiad opts default to -disablewallet, override with MATERIAD_OPTS
+materiad_opts=${MATERIAD_OPTS--disablewallet}
+
+start() {
+    echo -n $"Starting $prog: "
+    daemon $DAEMONOPTS $materiad $materiad_opts
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && touch $lockfile
+    return $RETVAL
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && rm -f $lockfile
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status $prog
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: service $prog {start|stop|status|restart}"
+        exit 1
+        ;;
+esac
