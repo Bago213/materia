@@ -159,7 +159,7 @@ public:
         consensus.nMajorityRejectBlockOutdated = 75;
         consensus.nMajorityWindow = 100;
         consensus.BIP34Height = 400000;
-        consensus.BIP34Hash = uint256S("0x0c7d44ae3a292a6c57271a2baaeaa282ebe49108a535b0a1bf96086ce0fe43bf");
+        consensus.BIP34Hash = uint256S("0xb2fd62bb0ce35b8975834c09856ddca03d56f9500190a574cef96203c4951afe");
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 5 * 60; // 3.5 days
         consensus.nPowTargetSpacing = 2 * 60;
@@ -191,9 +191,9 @@ public:
         nDefaultPort = 19617;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1508976363, 297396, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1508978258, 1377986, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0c7d44ae3a292a6c57271a2baaeaa282ebe49108a535b0a1bf96086ce0fe43bf"));
+        assert(consensus.hashGenesisBlock == uint256S("0xb2fd62bb0ce35b8975834c09856ddca03d56f9500190a574cef96203c4951afe"));
         assert(genesis.hashMerkleRoot == uint256S("0xcbbbcdaf2dca9625ffd0e02d6638d741cfbfca54ea051d4a9dd55777a03f456e"));
 
         vFixedSeeds.clear();
@@ -218,8 +218,8 @@ public:
 
         checkpointData = (CCheckpointData) {
             boost::assign::map_list_of
-            ( 0, uint256S("0x0c7d44ae3a292a6c57271a2baaeaa282ebe49108a535b0a1bf96086ce0fe43bf")),
-            1508976363,
+            ( 0, uint256S("0xb2fd62bb0ce35b8975834c09856ddca03d56f9500190a574cef96203c4951afe")),
+            1508978258,
             0,
             250
         };
