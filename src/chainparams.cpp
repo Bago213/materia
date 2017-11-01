@@ -77,12 +77,12 @@ public:
         consensus.BIP34Height = 710000;
         consensus.BIP34Hash = uint256S("0xff7778c63f3dc1acc537acd223c603b73bf31819d7c70e3bc53de93351fc537f");
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); 
-        consensus.nPowTargetTimespan = 4 * 60 * 60; // 4hours // 4 * 60 * 60 = 14400
-        consensus.nPowTargetSpacing = 2 * 60; // 2 minutes // 2 * 60  = 120
+        consensus.nPowTargetTimespan = 3.5 * 24 * 60 * 60; // 3.5 days
+        consensus.nPowTargetSpacing = 2.5 * 60;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
-        consensus.nRuleChangeActivationThreshold = 360; // 75% of 480
-        consensus.nMinerConfirmationWindow = 480; // nPowTargetTimespan / nPowTargetSpacing * 4
+        consensus.nRuleChangeActivationThreshold = 6048; // 75% of 480
+        consensus.nMinerConfirmationWindow = 8064; // nPowTargetTimespan / nPowTargetSpacing * 4
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
